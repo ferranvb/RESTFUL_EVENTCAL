@@ -38,7 +38,7 @@ public class EventService {
 	@GET
 	@Path("events/list")
 	@Produces(MediaType.APPLICATION_XML)
-	public List<EventRace> getListOfEventRace() {
+	public List<EventRace> getListOfEventRaceXML() {
 		EventRaceDao eDao = new EventRaceDao();
 		return eDao.getListOfEventRace();
 	}
@@ -52,7 +52,7 @@ public class EventService {
 	@GET
 	@Path("events/listjson")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getListOfEventRaceJson() {
+	public Response getListOfEventRaceJSON() {
 		
 		try {
 			EventRaceDao eDao = new EventRaceDao();
