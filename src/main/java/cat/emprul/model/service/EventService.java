@@ -22,9 +22,9 @@ public class EventService {
 	 * @return
 	 */
 	@GET
-	@Path("events/plain")
+	@Path("events/ok")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String getEventRaces() {
+	public String getServiceOK() {
 		
 		String response = "OK - service is workin";
 		return response;
