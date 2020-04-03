@@ -36,7 +36,7 @@ public class EventService {
 	 * @return
 	 */
 	@GET
-	@Path("events/list")
+	@Path("events/listxml")
 	@Produces(MediaType.APPLICATION_XML)
 	public List<EventRace> getListOfEventRaceXML() {
 		EventRaceDao eDao = new EventRaceDao();
