@@ -54,15 +54,9 @@ public class EventService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getListOfEventRaceJSON() {
 		
-		try {
-			EventRaceDao eDao = new EventRaceDao();
-		
-			GenericEntity<List<EventRace>> entity  = new GenericEntity<List<EventRace>>(eDao.getListOfEventRace()) {};
-
-			return Response.ok(entity).build();
-		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST).build();
-		}
+		EventRaceDao eDao = new EventRaceDao();
+		GenericEntity<List<EventRace>> entity  = new GenericEntity<List<EventRace>>(eDao.getListOfEventRace()) {};
+		return Response.ok(entity).build();
 		
 	}
 	

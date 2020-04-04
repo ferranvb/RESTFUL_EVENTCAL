@@ -13,6 +13,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import cat.emprul.model.entity.EventRace;
+import cat.emprul.model.exception.ErrorMessage;
+import cat.emprul.model.exception.ErrorMessages;
+import cat.emprul.model.exception.EventRaceException;
+import cat.emprul.model.exception.EventRaceExceptionMapper;
 
 public class EventRaceDao {
 
@@ -45,7 +49,6 @@ public class EventRaceDao {
 
 		} catch (ClassNotFoundException e) {
 			logger.error("Problem in loading MySQL JDBC driver");
-
 		}
 
 		try {
@@ -66,6 +69,11 @@ public class EventRaceDao {
 			connection.close();
 		} catch (SQLException e) {
 			logger.error("Error SQL" + e);
+			throw new EventRaceException(ErrorMessages.COULD_NOT_CONNECT_DATABASE.getErrorMessage());
+			
+//			.ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
+
+
 		}
 		
 		
