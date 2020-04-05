@@ -79,7 +79,8 @@ public class EventRaceDao {
 		
 		return listOfEventRace;
 	}
-
+	
+	
 	private EventRace fillEventRacefromResulSet(ResultSet rs) throws SQLException {
 		EventRace eventRace = new EventRace();
 		eventRace.setId_event(rs.getLong("id_event"));
@@ -97,4 +98,85 @@ public class EventRaceDao {
 		this.listOfEventRace = listOfEventRace;
 	}
 
+	
+	public void insertEvenRace(EventRace eventRace) {
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+
+		} catch (ClassNotFoundException e) {
+			logger.error("Problem in loading MySQL JDBC driver");
+		}
+
+		try {
+			connection = DriverManager.getConnection(SERVERHOST, USER, PASSW);
+			
+			
+			String sqlInsertQuery = "INSERT INTO events (nom,descripcio,lloc,pais,data_inici,data_fi) VALUES (?,?,?,?,?,?)";
+				
+			preparedStatement = connection.prepareStatement(sqlInsertQuery);
+			
+			preparedStatement.setString(1, eventRace.getName());
+			preparedStatement.setString(2, eventRace.getDescription());
+			preparedStatement.setString(3, eventRace.getSite());
+			preparedStatement.setString(4, eventRace.getCountry());
+			preparedStatement.setDate(5,  new java.sql.Date(eventRace.getDateStart().getTime()));
+			preparedStatement.setDate(6, new java.sql.Date(eventRace.getDateEnd().getTime()));
+			
+			preparedStatement.executeUpdate();
+
+			connection.close();
+		} catch (SQLException e) {
+			logger.error("Error SQL" + e);
+			throw new EventRaceException(ErrorMessages.COULD_NOT_CONNECT_DATABASE.getErrorMessage());
+			
+		}
+	}
+	
+	public void updatetEvenRace(EventRace eventRace) {
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+
+		} catch (ClassNotFoundException e) {
+			logger.error("Problem in loading MySQL JDBC driver");
+		}
+
+		try {
+			connection = DriverManager.getConnection(SERVERHOST, USER, PASSW);
+			
+			
+			String sqlInsertQuery = "UPDATE events SET " +
+					"nom = ? ,descripcio = ? ,lloc,pais = ? ,data_inici = ? ,data_fi = ? " +
+					"WHERE id_event = ?";
+				
+			preparedStatement = connection.prepareStatement(sqlInsertQuery);
+			
+			preparedStatement.setString(1, eventRace.getName());
+			preparedStatement.setString(2, eventRace.getDescription());
+			preparedStatement.setString(3, eventRace.getSite());
+			preparedStatement.setString(4, eventRace.getCountry());
+			preparedStatement.setDate(5, (java.sql.Date) eventRace.getDateStart());
+			preparedStatement.setDate(6, (java.sql.Date) eventRace.getDateEnd());
+			
+			preparedStatement.setLong(7, eventRace.getId_event());
+			preparedStatement.executeUpdate(sqlInsertQuery);
+			
+			connection.commit();
+			connection.close();
+		} catch (SQLException e) {
+			logger.error("Error SQL" + e);
+			throw new EventRaceException(ErrorMessages.COULD_NOT_CONNECT_DATABASE.getErrorMessage());
+			
+		}
+	}
+	
 }

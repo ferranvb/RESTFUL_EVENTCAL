@@ -2,7 +2,9 @@ package cat.emprul.model.service;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
@@ -60,5 +62,16 @@ public class EventService {
 		
 	}
 	
-	
+	@POST
+	@Path("events/post")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response insertEvenRace(EventRace eventRace) {
+		
+		EventRaceDao eDao = new EventRaceDao();
+		eDao.insertEvenRace(eventRace);
+		
+		String result = "EventRace saved : " + eventRace;
+		return Response.status(201).entity(result).build();
+		
+	}
 }
